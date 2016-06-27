@@ -4,11 +4,14 @@ from __future__ import unicode_literals
 
 AUTHOR = u'Jeffrey Moore'
 SITENAME = u'mode2.io'
-SITEURL = ''
+SITEURL = 'http://mode2.io'
 THEME = '/Library/Python/2.7/site-packages/pelican/themes/pelican-hyde'
 PROFILE_IMAGE = 'logo.png'
 
-BIO = 'A blog about Cloud, DevOps, and Data in the Enterprise.'
+BIO = '''
+A blog about Cloud, DevOps, Data, and Technology innovation.<br>
+Jeffrey Moore is a Solutions Architect, focused on bringing new and emerging technologies to the Enterprise.
+'''
 PATH = 'content'
 
 TIMEZONE = 'America/Los_Angeles'
@@ -30,14 +33,17 @@ AUTHOR_FEED_RSS = None
 
 # Social widget
 SOCIAL = (('email', 'info@mode2.io'),
-          ('twitter', 'https://twitter.com/mode2io'),
-          ('github', 'https://github.com/mode2io'),)
+          ('twitter', 'https://twitter.com/jmoore987'),
+          ('github', 'https://github.com/jmoore987'),
+          ('linkedin', 'https://www.linkedin.com/in/jeffrey-moore-73b3ab51'))
 
-DEFAULT_PAGINATION = 10
+DEFAULT_PAGINATION = 7
 
 # Uncomment following line if you want document-relative URLs when developing
-RELATIVE_URLS = True
+#RELATIVE_URLS = True
 
 STATIC_PATHS = ['images', 'extra/CNAME', 'extra/.nojekyll']
 EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}, 'extra/.nojekyll': {'path': '.nojekyll'}}
+
+DISQUS_SITENAME = 'mode2io'
 
