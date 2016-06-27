@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>mode2.io</title><link href="https://mode2.io/" rel="alternate"></link><link href="https://mode2.io/feeds/all.atom.xml" rel="self"></link><id>https://mode2.io/</id><updated>2016-06-27T10:09:21Z</updated></feed>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>mode2.io</title><link href="https://mode2.io/" rel="alternate"></link><link href="https://mode2.io/feeds/all.atom.xml" rel="self"></link><id>https://mode2.io/</id><updated>2016-06-17T12:16:00-07:00</updated><entry><title>First Page</title><link href="https://mode2.io/first-page.html" rel="alternate"></link><published>2016-06-17T12:16:00-07:00</published><author><name>Jeffrey Moore</name></author><id>tag:mode2.io,2016-06-17:first-page.html</id><summary type="html">&lt;h3&gt;Site Launch&lt;/h3&gt;
+&lt;p&gt;Welcome to &lt;a href="https://mode2.io"&gt;mode2.io&lt;/a&gt;, a blog about Cloud, DevOps, Data, and Innovation.&lt;/p&gt;
+&lt;p&gt;The main author is &lt;a href="mailto:info@mode2.io"&gt;Jeffrey Moore&lt;/a&gt;&lt;/p&gt;</summary></entry></feed>
