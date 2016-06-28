@@ -16,7 +16,7 @@ From the [Reactor System] webpage, it looks like just what I need
 
 >Salt's Reactor system gives Salt the ability to trigger actions in response to an event. It is a simple interface to watching Salt's event bus for event tags that match a given pattern and then running one or more commands in response.
 
-Events in Salt are similar to a RESTful API, except the JSON transfered much like everything else in Salt, along a message queue, and given a tag, rather than a web endpoint.  In fact, you can integrate your own tools in to the Salt Event System using their [REST API](https://docs.saltstack.com/en/latest/topics/event/events.html#remotely-via-the-rest-api) to have your application react to changes in your infrastructure.
+Events in Salt are similar to a RESTful API, except the JSON transfered much like everything else in Salt, along a message queue, and given a tag, rather than a web endpoint.  In fact, you can integrate your own tools in to the Salt Event System using their [RESTful API] to have your application react to changes in your infrastructure.
 
 ### Data Gathering
   It turns out that Salt makes it incredibly easy to do what we're trying to do.  Per [this](https://docs.saltstack.com/en/latest/topics/event/master_events.html#cloud-events) documentation, [SaltCloud] fires off events at various stages of the provisioning and decomissioning process.
@@ -124,7 +124,7 @@ For instance:
 * utilize open source [plugins](https://github.com/saltstack-formulas/ec2-autoscale-reactor) to react to AWS events
 * react to systems being out of desired state
 * automatically add a system to DNS, monitoring, inventory control systems upon creation or remove it from the same after destruction
-* using Salt's [RESTful API](https://docs.saltstack.com/en/develop/ref/netapi/all/salt.netapi.rest_cherrypy.html), allow your application to send events to your infrastructure
+* using Salt's [RESTful API], allow your application to send events to your infrastructure
 
 Automation of infrastructure provisioning and deprovisioning is an important part of any dynamic DevOps or Cloud infrastructure, and this is just one tool in a tool chest of many to help accomplish that.
 
@@ -140,5 +140,6 @@ Automation of infrastructure provisioning and deprovisioning is an important par
 [Reactor System]:https://docs.saltstack.com/en/latest/topics/reactor/
 [Runner System]:https://docs.saltstack.com/en/latest/ref/runners/
 [Beacon System]:https://docs.saltstack.com/en/latest/topics/beacons/index.html
+[RESTful API]:https://docs.saltstack.com/en/develop/ref/netapi/all/salt.netapi.rest_cherrypy.html
 [Python]:https://python.org
 
