@@ -16,12 +16,12 @@
 &lt;blockquote&gt;
 &lt;p&gt;Fired once the deploy script is finished.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;salt/cloud/jmtest&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;/deploy_script&lt;/span&gt;    &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;_stamp&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;2016-06-27T03:01:00.529873&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
-    &lt;span class="nt"&gt;&amp;quot;event&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;jmtest1 has been deployed at 10.10.51.151&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
-    &lt;span class="nt"&gt;&amp;quot;host&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;10.10.51.151&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
-    &lt;span class="nt"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;jmtest1&amp;quot;&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;salt/cloud/jmtest1/deploy_script    {
+    &amp;quot;_stamp&amp;quot;: &amp;quot;2016-06-27T03:01:00.529873&amp;quot;, 
+    &amp;quot;event&amp;quot;: &amp;quot;jmtest1 has been deployed at 10.10.51.151&amp;quot;, 
+    &amp;quot;host&amp;quot;: &amp;quot;10.10.51.151&amp;quot;, 
+    &amp;quot;name&amp;quot;: &amp;quot;jmtest1&amp;quot;
+}
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -30,11 +30,11 @@
 &lt;blockquote&gt;
 &lt;p&gt;Fired when an instance has been destroyed.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;salt/cloud/jmtest&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="err"&gt;/destroyed&lt;/span&gt;    &lt;span class="p"&gt;{&lt;/span&gt;
-    &lt;span class="nt"&gt;&amp;quot;_stamp&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;2016-06-27T03:02:14.852897&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
-    &lt;span class="nt"&gt;&amp;quot;event&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;destroyed instance&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; 
-    &lt;span class="nt"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;jmtest1&amp;quot;&lt;/span&gt;
-&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;salt/cloud/jmtest1/destroyed    {
+    &amp;quot;_stamp&amp;quot;: &amp;quot;2016-06-27T03:02:14.852897&amp;quot;, 
+    &amp;quot;event&amp;quot;: &amp;quot;destroyed instance&amp;quot;, 
+    &amp;quot;name&amp;quot;: &amp;quot;jmtest1&amp;quot;
+}
 &lt;/pre&gt;&lt;/div&gt;
 
 
