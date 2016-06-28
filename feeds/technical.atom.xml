@@ -69,12 +69,14 @@
 &lt;p&gt;&lt;em&gt;Note: In a production environment, be sure to use a keyfile for security.  Within our lab environment, we allow some rather insecure practices given the nature of the experiments run within it.&lt;/em&gt;&lt;/p&gt;
 &lt;p&gt;Now that we have our actions defined, we can attach them to the events we defined earlier.&lt;/p&gt;
 &lt;p&gt;We will create a new file in /etc/salt/master.d pointing to the reactor files we created earlier and restart the salt-master&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;yaml
- reactor:
-    - 'salt/cloud/*/deploy_script':
-        - /srv/reactor/add_dns.sls
-    - 'salt/cloud/*/destroyed':
-        - /srv/reactor/rem_dns.sls&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;reactor&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;salt/cloud/*/deploy_script&amp;#39;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+        &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;/srv/reactor/add_dns.sls&lt;/span&gt;
+    &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;salt/cloud/*/destroyed&amp;#39;&lt;/span&gt;&lt;span class="p p-Indicator"&gt;:&lt;/span&gt;
+        &lt;span class="p p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l l-Scalar l-Scalar-Plain"&gt;/srv/reactor/rem_dns.sls&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;h3&gt;The end result&lt;/h3&gt;
 &lt;p&gt;Once we've restarted our salt-master process, our changes should take effect and we should see a new DNS entry created upon VM creation, and deleted upon VM destruction.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;root@saltmaster01 ~&lt;span class="o"&gt;]&lt;/span&gt;&lt;span class="c1"&gt;# host jmtest1.mydomain.com&lt;/span&gt;

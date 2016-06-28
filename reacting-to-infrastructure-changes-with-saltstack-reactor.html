@@ -133,12 +133,14 @@ Jeffrey Moore is a Solutions Architect, focused on bringing new and emerging tec
 <p><em>Note: In a production environment, be sure to use a keyfile for security.  Within our lab environment, we allow some rather insecure practices given the nature of the experiments run within it.</em></p>
 <p>Now that we have our actions defined, we can attach them to the events we defined earlier.</p>
 <p>We will create a new file in /etc/salt/master.d pointing to the reactor files we created earlier and restart the salt-master</p>
-<p><code>yaml
- reactor:
-    - 'salt/cloud/*/deploy_script':
-        - /srv/reactor/add_dns.sls
-    - 'salt/cloud/*/destroyed':
-        - /srv/reactor/rem_dns.sls</code></p>
+<div class="highlight"><pre><span></span> <span class="l l-Scalar l-Scalar-Plain">reactor</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="s">&#39;salt/cloud/*/deploy_script&#39;</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">/srv/reactor/add_dns.sls</span>
+    <span class="p p-Indicator">-</span> <span class="s">&#39;salt/cloud/*/destroyed&#39;</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">/srv/reactor/rem_dns.sls</span>
+</pre></div>
+
+
 <h3>The end result</h3>
 <p>Once we've restarted our salt-master process, our changes should take effect and we should see a new DNS entry created upon VM creation, and deleted upon VM destruction.</p>
 <div class="highlight"><pre><span></span><span class="o">[</span>root@saltmaster01 ~<span class="o">]</span><span class="c1"># host jmtest1.mydomain.com</span>
