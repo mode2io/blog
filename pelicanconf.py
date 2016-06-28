@@ -46,4 +46,4 @@ STATIC_PATHS = ['images', 'extra/CNAME', 'extra/.nojekyll']
 EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}, 'extra/.nojekyll': {'path': '.nojekyll'}}
 
 DISQUS_SITENAME = 'mode2io'
-
+GOOGLE_ANALYTICS = 'UA-79989172-1'
