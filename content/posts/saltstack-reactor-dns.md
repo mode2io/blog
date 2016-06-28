@@ -26,7 +26,7 @@ While watching ```salt-run state.event pretty=True``` in one window to view the 
 **salt/cloud/*vm_name*/deploy_script**
 > Fired once the deploy script is finished.
 
-```json
+```
 salt/cloud/jmtest1/deploy_script	{
     "_stamp": "2016-06-27T03:01:00.529873", 
     "event": "jmtest1 has been deployed at 10.10.51.151", 
@@ -39,7 +39,7 @@ and
 **salt/cloud/*vm_name*/destroyed**
 > Fired when an instance has been destroyed.
 
-```json
+```
 salt/cloud/jmtest1/destroyed	{
     "_stamp": "2016-06-27T03:02:14.852897", 
     "event": "destroyed instance", 

@@ -80,12 +80,12 @@ Jeffrey Moore is a Solutions Architect, focused on bringing new and emerging tec
 <blockquote>
 <p>Fired once the deploy script is finished.</p>
 </blockquote>
-<div class="highlight"><pre><span></span><span class="err">salt/cloud/jmtest</span><span class="mi">1</span><span class="err">/deploy_script</span>    <span class="p">{</span>
-    <span class="nt">&quot;_stamp&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-06-27T03:01:00.529873&quot;</span><span class="p">,</span> 
-    <span class="nt">&quot;event&quot;</span><span class="p">:</span> <span class="s2">&quot;jmtest1 has been deployed at 10.10.51.151&quot;</span><span class="p">,</span> 
-    <span class="nt">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;10.10.51.151&quot;</span><span class="p">,</span> 
-    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;jmtest1&quot;</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span>salt/cloud/jmtest1/deploy_script    {
+    &quot;_stamp&quot;: &quot;2016-06-27T03:01:00.529873&quot;, 
+    &quot;event&quot;: &quot;jmtest1 has been deployed at 10.10.51.151&quot;, 
+    &quot;host&quot;: &quot;10.10.51.151&quot;, 
+    &quot;name&quot;: &quot;jmtest1&quot;
+}
 </pre></div>
 
 
@@ -94,11 +94,11 @@ Jeffrey Moore is a Solutions Architect, focused on bringing new and emerging tec
 <blockquote>
 <p>Fired when an instance has been destroyed.</p>
 </blockquote>
-<div class="highlight"><pre><span></span><span class="err">salt/cloud/jmtest</span><span class="mi">1</span><span class="err">/destroyed</span>    <span class="p">{</span>
-    <span class="nt">&quot;_stamp&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-06-27T03:02:14.852897&quot;</span><span class="p">,</span> 
-    <span class="nt">&quot;event&quot;</span><span class="p">:</span> <span class="s2">&quot;destroyed instance&quot;</span><span class="p">,</span> 
-    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;jmtest1&quot;</span>
-<span class="p">}</span>
+<div class="highlight"><pre><span></span>salt/cloud/jmtest1/destroyed    {
+    &quot;_stamp&quot;: &quot;2016-06-27T03:02:14.852897&quot;, 
+    &quot;event&quot;: &quot;destroyed instance&quot;, 
+    &quot;name&quot;: &quot;jmtest1&quot;
+}
 </pre></div>
 
 
