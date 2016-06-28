@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link href="http://gmpg.org/xfn/11" rel="profile">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+		<!-- Enable responsiveness on mobile devices-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+		<title>mode2.io</title>
+
+		<!-- CSS -->
+		<link href="//fonts.googleapis.com/" rel="dns-prefetch">
+		<link href="//fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic|Abril+Fatface|PT+Sans:400,400italic,700&amp;subset=latin,latin-ext" rel="stylesheet">
+
+		<link rel="stylesheet" href="http://mode2.io/theme/css/poole.css" />
+		<link rel="stylesheet" href="http://mode2.io/theme/css/hyde.css" />
+		<link rel="stylesheet" href="http://mode2.io/theme/css/syntax.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+		<!-- RSS -->
+		<link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+	</head>
+
+	<body class="theme-base-0d">
+<div class="sidebar">
+	<div class="container sidebar-sticky">
+		<div class="sidebar-about">
+
+			<h1>
+				<a href="/">
+					mode2.io
+				</a>
+			</h1>
+			<p class="lead"></p>
+			<p class="lead"><a href="http://mode2.io/pages/about-the-author.html">About</a></p>
+			<p class="lead">
+A blog about Cloud, DevOps, Data, and Technology innovation.<br>
+Jeffrey Moore is a Solutions Architect, focused on bringing new and emerging technologies to the Enterprise.
+ </p>
+			<p></p>
+		</div>
+		<nav class="sidebar-nav">
+					<a class="sidebar-nav-item" href="mailto:info@mode2.io">
+						<i class="fa fa-envelope"></i>
+					</a>
+					<a class="sidebar-nav-item" href="https://twitter.com/iamjmoore987">
+						<i class="fa fa-twitter"></i>
+					</a>
+					<a class="sidebar-nav-item" href="https://github.com/jmoore987">
+						<i class="fa fa-github"></i>
+					</a>
+					<a class="sidebar-nav-item" href="https://www.linkedin.com/in/jeffrey-moore-73b3ab51">
+						<i class="fa fa-linkedin"></i>
+					</a>
+			<a class="sidebar-nav-item" href="">
+				<i class="fa fa-feed"></i>
+			</a>
+		</nav>
+	</div>
+</div>		<div class="content container">
+<div class="post">
+	<h1 class="post-title">Reacting to Infrastructure Changes with SaltStack Reactor</h1>
+	<span class="post-date">Mon 27 June 2016</span>
+	<h3>SaltStack</h3>
+<p><a href="https://saltstack.com">SaltStack</a> ( or Salt) is a remote execution and configuration management tool that I've been using for a few years.  While other tools like Chef and Puppet might have a bigger userbase (I have no numbers to back up this statement), I appreciated both the completeness of the Salt ecosystem, as well as the fact that it's written in <a href="https://python.org">Python</a>, making it much easier for me to extend.  Configuration is done in Salt using standard YAML, meaning there's a much lower learning curve than some other players in the space that use a custom DSL.</p>
+<h3>SaltStack Reactor System</h3>
+<p>Working on a proof of concept project, I needed some functionality that involved reacting to certain events.  In this particular case, I needed to be able to respond to VMs being created and deleted dynamically (think auto-scaling type behavior) in both our AWS and onsite VMWare environments. </p>
+<p>After looking around for several solutions, I settled upon using Salt's <a href="https://docs.saltstack.com/en/latest/topics/reactor/">Reactor System</a>.  The key driver for this solution is that since I was using <a href="https://docs.saltstack.com/en/latest/topics/cloud/">SaltCloud</a> to provide a single interface for system provisioning, I didn't want to complicate things by utilizing each platforms own custom events and have to manage my reactions in two places.  Plus, it is a good example of the completeness of the Salt ecosystem.</p>
+<p>From the <a href="https://docs.saltstack.com/en/latest/topics/reactor/">Reactor System</a> webpage, it looks like just what I need</p>
+<blockquote>
+<p>Salt's Reactor system gives Salt the ability to trigger actions in response to an event. It is a simple interface to watching Salt's event bus for event tags that match a given pattern and then running one or more commands in response.</p>
+</blockquote>
+<p>Events in Salt are similar to a RESTful API, except the JSON transfered much like everything else in Salt, along a message queue, and given a tag, rather than a web endpoint.  In fact, you can integrate your own tools in to the Salt Event System using their <a href="https://docs.saltstack.com/en/latest/topics/event/events.html#remotely-via-the-rest-api">REST API</a> to have your application react to changes in your infrastructure.</p>
+<h3>Data Gathering</h3>
+<p>It turns out that Salt makes it incredibly easy to do what we're trying to do.  Per <a href="https://docs.saltstack.com/en/latest/topics/event/master_events.html#cloud-events">this</a> documentation, <a href="https://docs.saltstack.com/en/latest/topics/cloud/">SaltCloud</a> fires off events at various stages of the provisioning and decomissioning process.</p>
+<p>While watching <code>salt-run state.event pretty=True</code> in one window to view the event queue, I fired off a provision and destroy action using SaltCloud in another window and found (among others) the two following entries which looked useful.</p>
+<p><strong>salt/cloud/<em>vm_name</em>/deploy_script</strong></p>
+<blockquote>
+<p>Fired once the deploy script is finished.</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="err">salt/cloud/jmtest</span><span class="mi">1</span><span class="err">/deploy_script</span>    <span class="p">{</span>
+    <span class="nt">&quot;_stamp&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-06-27T03:01:00.529873&quot;</span><span class="p">,</span> 
+    <span class="nt">&quot;event&quot;</span><span class="p">:</span> <span class="s2">&quot;jmtest1 has been deployed at 10.10.51.151&quot;</span><span class="p">,</span> 
+    <span class="nt">&quot;host&quot;</span><span class="p">:</span> <span class="s2">&quot;10.10.51.151&quot;</span><span class="p">,</span> 
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;jmtest1&quot;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>and</p>
+<p><strong>salt/cloud/<em>vm_name</em>/destroyed</strong></p>
+<blockquote>
+<p>Fired when an instance has been destroyed.</p>
+</blockquote>
+<div class="highlight"><pre><span></span><span class="err">salt/cloud/jmtest</span><span class="mi">1</span><span class="err">/destroyed</span>    <span class="p">{</span>
+    <span class="nt">&quot;_stamp&quot;</span><span class="p">:</span> <span class="s2">&quot;2016-06-27T03:02:14.852897&quot;</span><span class="p">,</span> 
+    <span class="nt">&quot;event&quot;</span><span class="p">:</span> <span class="s2">&quot;destroyed instance&quot;</span><span class="p">,</span> 
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;jmtest1&quot;</span>
+<span class="p">}</span>
+</pre></div>
+
+
+<p>I chose these two particular events as they were significant points in the provisioning process, and contained all the data (hostname and IP) that I needed.  So now I just had to trap these two events using the Salt Reactor System, then   fire off the reaction I'm interested.  In this case, we'll do something simple... Add the host to DNS when it's created, and remove it from DNS when it's destroyed.</p>
+<h3>Implementation</h3>
+<p>First step is to define the actions to be taken.  We add the following file in to /srv/reactor.</p>
+<p><strong>/srv/reactor/add_dns.sls</strong></p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">add_dns</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">runner.ddns.add_host</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">{{</span> <span class="nv">data</span><span class="p p-Indicator">[</span><span class="s">&#39;name&#39;</span><span class="p p-Indicator">]</span> <span class="p p-Indicator">}}</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">zone</span><span class="p p-Indicator">:</span> <span class="s">&#39;mydomain.com&#39;</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ttl</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">60</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">ip</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">{{</span> <span class="nv">data</span><span class="p p-Indicator">[</span><span class="s">&#39;host&#39;</span><span class="p p-Indicator">]</span> <span class="p p-Indicator">}}</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">keyname</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">None</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">keyfile</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">None</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">nameserver</span><span class="p p-Indicator">:</span> <span class="s">&#39;10.10.38.250&#39;</span>
+</pre></div>
+
+
+<p><strong>/srv/reactor/rem_dns.sls</strong></p>
+<div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">rem_dns</span><span class="p p-Indicator">:</span>
+    <span class="l l-Scalar l-Scalar-Plain">runner.ddns.delete_host</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="p p-Indicator">{{</span> <span class="nv">data</span><span class="p p-Indicator">[</span><span class="s">&#39;name&#39;</span><span class="p p-Indicator">]</span> <span class="p p-Indicator">}}</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">zone</span><span class="p p-Indicator">:</span> <span class="s">&#39;mydomain.com&#39;</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">keyname</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">None</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">keyfile</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">None</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">nameserver</span><span class="p p-Indicator">:</span> <span class="s">&#39;10.10.38.250&#39;</span>
+</pre></div>
+
+
+<p>These two files will define our actions using Salt's <a href="https://docs.saltstack.com/en/latest/ref/runners/">Runner System</a>.  As you can see, with the Reactor System, we are given access to the data passed in the event JSON from above.  </p>
+<p><em>Note: In a production environment, be sure to use a keyfile for security.  Within our lab environment, we allow some rather insecure practices given the nature of the experiments run within it.</em></p>
+<p>Now that we have our actions defined, we can attach them to the events we defined earlier.</p>
+<p>We will create a new file in /etc/salt/master.d pointing to the reactor files we created earlier and restart the salt-master</p>
+<div class="highlight"><pre><span></span> <span class="l l-Scalar l-Scalar-Plain">reactor</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="s">&#39;salt/cloud/*/deploy_script&#39;</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">/srv/reactor/add_dns.sls</span>
+    <span class="p p-Indicator">-</span> <span class="s">&#39;salt/cloud/*/destroyed&#39;</span><span class="p p-Indicator">:</span>
+        <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">/srv/reactor/rem_dns.sls</span>
+</pre></div>
+
+
+<h3>The end result</h3>
+<p>Once we've restarted our salt-master process, our changes should take effect and we should see a new DNS entry created upon VM creation, and deleted upon VM destruction.</p>
+<div class="highlight"><pre><span></span><span class="o">[</span>root@saltmaster01 ~<span class="o">]</span><span class="c1"># host jmtest1.mydomain.com</span>
+Host jmtest1.mydomain.com not found: 3<span class="o">(</span>NXDOMAIN<span class="o">)</span>
+<span class="o">[</span>root@saltmaster01 ~<span class="o">]</span><span class="c1"># salt-cloud -p centos7-prod jmtest1</span>
+<span class="c1"># Output snipped for brevity</span>
+<span class="o">[</span>root@saltmaster01 ~<span class="o">]</span><span class="c1"># host jmtest1.mydomain.com</span>
+jmtest1.mydomain.com has address 10.10.51.152
+<span class="o">[</span>root@saltmaster01 ~<span class="o">]</span><span class="c1"># salt-cloud -d jmtest1</span>
+<span class="c1"># Output snipped for brevity</span>
+<span class="o">[</span>root@saltmaster01 ~<span class="o">]</span><span class="c1"># host jmtest1.red8coe.com</span>
+Host jmtest1.mydomain.com not found: 3<span class="o">(</span>NXDOMAIN<span class="o">)</span>
+<span class="o">[</span>root@saltmaster01 ~<span class="o">]</span><span class="c1">#</span>
+</pre></div>
+
+
+<p><strong>SUCCESS!</strong></p>
+<h3>Conclusion</h3>
+<p>We can now see the power of Salt's Reactor System.  One can imagine a multitude of use cases surrounding this feature.  </p>
+<p>For instance:</p>
+<ul>
+<li>fire an event when your application is installed</li>
+<li>using Salt's <a href="https://docs.saltstack.com/en/latest/topics/beacons/index.html">Beacon System</a>, fire events based on load average or when an important file is modified</li>
+<li>utilize open source <a href="https://github.com/saltstack-formulas/ec2-autoscale-reactor">plugins</a> to react to AWS events</li>
+<li>react to systems being out of desired state</li>
+<li>automatically add a system to DNS, monitoring, inventory control systems upon creation or remove it from the same after destruction</li>
+<li>using Salt's <a href="https://docs.saltstack.com/en/develop/ref/netapi/all/salt.netapi.rest_cherrypy.html">RESTful API</a>, allow your application to send events to your infrastructure</li>
+</ul>
+<p>Automation of infrastructure provisioning and deprovisioning is an important part of any dynamic DevOps or Cloud infrastructure, and this is just one tool in a tool chest of many to help accomplish that.</p>
+<p><strong>Questions, comments, improvements, or ideas?</strong>  Please let me know in the comments below!</p>
+	<div id="disqus_thread"></div>
+		<script type="text/javascript">
+			var disqus_shortname = 'mode2io';
+			(function() {
+	 			var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	 			dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	 			(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	 		})();
+		</script>
+	<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+		</div>
+	</body>
+</html>

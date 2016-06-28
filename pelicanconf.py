@@ -33,7 +33,7 @@ AUTHOR_FEED_RSS = None
 
 # Social widget
 SOCIAL = (('email', 'info@mode2.io'),
-          ('twitter', 'https://twitter.com/jmoore987'),
+          ('twitter', 'https://twitter.com/iamjmoore987'),
           ('github', 'https://github.com/jmoore987'),
           ('linkedin', 'https://www.linkedin.com/in/jeffrey-moore-73b3ab51'))
 
