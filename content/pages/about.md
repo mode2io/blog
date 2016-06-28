@@ -5,7 +5,7 @@ Category: site
 
 Welcome to [mode2.io](https://mode2.io), a blog about Cloud, DevOps, Data, and Technology Innovation.
 
-The main author is [Jeffrey Moore](https://github.com/jmoore987).  Jeffrey is an experienced technologist, having run Development, Operations, and Data teams.  Specifically, he has deep domain expertise in the late-stage startup arena, particularly in AdTech and Online Media.  
+The main author is [Jeffrey Moore](https://github.com/jmoore987).  Jeffrey is an experienced technologist, having run Development, Operations, and Data organizations.  Specifically, he has deep domain expertise in the late-stage startup AdTech and Online Media industries supporting internet scale products and platforms.  
 
 These days, he can be found providing consulting services to enterprise clients as Sr. Solutions Architect at [Red8](http://red8.com), where he leads the emerging technologies practices, including:
 
